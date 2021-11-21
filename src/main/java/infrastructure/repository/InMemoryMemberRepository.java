@@ -1,8 +1,8 @@
 package infrastructure.repository;
 
-import domain.exception.MemberNotFoundException;
 import domain.model.Member;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,18 +18,26 @@ public final class InMemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member findById(int id) throws MemberNotFoundException {
-        final Member member = data.get(id);
+    public Member findById(int id){
+        return data.get(id);
+    }
 
-        if(member == null){
-            throw new MemberNotFoundException(String.format("Utilisateur introuvable ou inexistant %d", id) );
+    @Override
+    public Member findByEmail(String email){
+
+        Collection<Member> values = data.values();
+        for (Member member: values
+             ) {
+            if(member.getEmailAddress().getEmailAddress().equals(email)){
+                return member;
+            }
         }
-
-        return member;
+        return null;
     }
 
     @Override
     public Member add(Member member) {
+        //Vérifier que l'utilisateur n'existe pas déjà avant de l'ajouter
         data.put(member.getId(), member);
 
         return member;

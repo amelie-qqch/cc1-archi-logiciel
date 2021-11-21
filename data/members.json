@@ -1,0 +1,21 @@
+{
+  "members": [
+    {
+      "id": 0,
+      "firstname": "Abigail",
+      "lastname": "Something",
+      "emailAddress": "a.something@thecompany.com",
+      "password" : "hashedPasswordHere",
+      "memberStatus" : 0
+    },
+    {
+      "id": 1,
+      "firstname": "Bertrand",
+      "lastname": "Durand",
+      "emailAddress": "b.durand@thecompany.com",
+      "password" : "hashedPasswordHere",
+      "memberStatus" : 1
+    }
+  ]
+
+}

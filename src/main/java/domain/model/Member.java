@@ -2,24 +2,26 @@ package domain.model;
 
 public class Member {
 
-    private int id;
-    private EmailAddress emailAdresse; // ou credentials
+    private final int id;
+    private EmailAddress emailAdresse;
     private String firstname;
     private String lastname;
-    private Password password;
+    private String password;
+    private MemberStatus status;
 
     public Member(
-            int id,
+            int id, //Faire une classe ?
             EmailAddress emailAddress,
             String firstname,
             String lastname,
-            Password password
+            String password
     ) {
         this.id           = id;
         this.emailAdresse = emailAddress;
         this.firstname    = firstname;
         this.lastname     = lastname;
         this.password     = password;
+        this.status       = new MemberStatus(MemberStatus.PENDING_PAYMENT);
     }
 
     public int getId(){
@@ -49,12 +51,20 @@ public class Member {
         this.lastname = lastname;
     }
 
-    public Password getPassword() {
+    public String getPassword() {
         return this.password;
     }
 
-    public void changePassword(Password password){
+    public void changePassword(String password){
         this.password = password;
+    }
+
+    public MemberStatus getStatus(){
+        return this.status;
+    }
+
+    public void changeStatus(MemberStatus status){
+        this.status = status;
     }
 
 
