@@ -4,7 +4,7 @@ import domain.exception.InvalidArgumentException;
 
 public final class EmailAddress {
 
-    private String emailAddress;
+    private final String emailAddress;
 
     public EmailAddress(String emailAddress) throws InvalidArgumentException
     {
@@ -15,8 +15,8 @@ public final class EmailAddress {
     }
 
     private boolean isValid(String emailAddress){
-        //TODO
-        return false;
+        String emailRegex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"; // pourrait être une constante
+        return emailAddress.matches(emailRegex);
     }
 
     public String getEmailAddress(){
