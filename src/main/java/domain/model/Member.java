@@ -3,36 +3,34 @@ package domain.model;
 public class Member {
 
     private final int id;
-    private EmailAddress emailAdresse;
+    private Credentials credentials;
     private String firstname;
     private String lastname;
-    private String password;
     private MemberStatus status;
 
     public Member(
-            int id, //Faire une classe ?
-            EmailAddress emailAddress,
+            int id,
+            Credentials credentials,
             String firstname,
-            String lastname,
-            String password
+            String lastname
     ) {
         this.id           = id;
-        this.emailAdresse = emailAddress;
         this.firstname    = firstname;
         this.lastname     = lastname;
-        this.password     = password;
+        this.credentials  = credentials;
         this.status       = new MemberStatus(MemberStatus.PENDING_PAYMENT);
     }
 
     public int getId(){
         return this.id;
     }
-    public EmailAddress getEmailAddress() {
-        return this.emailAdresse;
+
+    public String getEmailAddress() {
+        return this.credentials.getEmailAddress();
     }
 
-    public void changeEmailAddress(EmailAddress emailAddress) {
-        this.emailAdresse = emailAddress;
+    public void changeCredentials(Credentials credentials) {
+        this.credentials = credentials;
     }
 
     public String getFirstname() {
@@ -49,14 +47,6 @@ public class Member {
 
     public void changeLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void changePassword(String password){
-        this.password = password;
     }
 
     public MemberStatus getStatus(){

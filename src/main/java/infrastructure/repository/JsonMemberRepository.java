@@ -64,7 +64,7 @@ public final class JsonMemberRepository implements MemberRepository { // TODO à
     public Member findByEmail(String email){
         for (Member member: members
         ) {
-            if(member.getEmailAddress().getEmailAddress().equals(email)){
+            if(member.getEmailAddress().equals(email)){
                 return member;
             }
         }

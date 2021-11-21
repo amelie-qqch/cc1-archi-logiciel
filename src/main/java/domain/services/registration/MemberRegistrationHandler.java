@@ -3,36 +3,40 @@ package domain.services.registration;
 import domain.exception.InvalidArgumentException;
 import domain.exception.MemberAlreadyExistsException;
 import domain.exception.MemberRegistrationException;
-import domain.model.EmailAddress;
+import domain.model.Credentials;
 import domain.model.Member;
 import infrastructure.repository.MemberRepository;
 
+import javax.security.auth.login.CredentialException;
+
 public class MemberRegistrationHandler {
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+
+    public MemberRegistrationHandler(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     public Member handle(MemberRegistrationAction action) throws MemberAlreadyExistsException, MemberRegistrationException {
         if(null != this.memberRepository.findByEmail(action.email)){
             throw new MemberAlreadyExistsException();
         }
 
-        //TODO vérification du password
-
         int memberId = this.memberRepository.nextIdentity();
-        EmailAddress email;
+        Credentials credentials;
 
         try{
-            email = new EmailAddress(action.email);
-        } catch (InvalidArgumentException exception) {
+            credentials = new Credentials(action.email, action.password);
+        } catch (InvalidArgumentException | CredentialException exception) {
             exception.printStackTrace();
-            throw new MemberRegistrationException("email invalide");
+            throw new MemberRegistrationException(Integer.toString(memberId));
         }
+
         Member newMember = new Member(
                 memberId,
-                email,
+                credentials,
                 action.firstname,
-                action.lastname,
-                action.password
+                action.lastname
         );
 
         this.memberRepository.add(newMember);
@@ -40,4 +44,5 @@ public class MemberRegistrationHandler {
 
         return newMember;
     }
+
 }

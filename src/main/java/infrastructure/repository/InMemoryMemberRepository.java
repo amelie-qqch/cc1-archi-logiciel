@@ -28,7 +28,7 @@ public final class InMemoryMemberRepository implements MemberRepository {
         Collection<Member> values = data.values();
         for (Member member: values
              ) {
-            if(member.getEmailAddress().getEmailAddress().equals(email)){
+            if(member.getEmailAddress().equals(email)){
                 return member;
             }
         }
@@ -37,7 +37,6 @@ public final class InMemoryMemberRepository implements MemberRepository {
 
     @Override
     public Member add(Member member) {
-        //Vérifier que l'utilisateur n'existe pas déjà avant de l'ajouter
         data.put(member.getId(), member);
 
         return member;

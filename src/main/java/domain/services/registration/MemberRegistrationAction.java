@@ -5,5 +5,4 @@ public class MemberRegistrationAction {
     public String firstname;
     public String lastname;
     public String password;
-    public String passwordConfirmation;
 }
