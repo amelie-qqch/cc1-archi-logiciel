@@ -2,10 +2,11 @@ package domain.services.registration;
 
 import domain.model.PaymentMethod;
 import domain.model.SubscriptionFees;
+import infrastructure.Action;
 
 import java.util.Date;
 
-public class SubscriptionRequestAction {
+public class SubscriptionRequestAction implements Action {
     public int memberId;
     public int subscriptionType;
     public int subscriptionPeriodicity;
