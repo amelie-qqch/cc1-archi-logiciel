@@ -36,9 +36,13 @@ public final class InMemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member add(Member member) {
+    public void add(Member member) {
         data.put(member.getId(), member);
 
-        return member;
+    }
+
+    @Override
+    public void update(Member member) {
+
     }
 }

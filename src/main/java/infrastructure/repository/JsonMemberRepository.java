@@ -72,16 +72,22 @@ public final class JsonMemberRepository implements MemberRepository { // TODO à
     }
 
     @Override
-    public Member add(Member member) {
+    public void add(Member member) {
         members.add(member);
 
-        return member;
     }
 
+    @Override
+    public void update(Member member) {
+
+    }
+
+
+    //Dans un service : pas de logger dans un repository
     /**
      * Met à jour le fichier des membres
      */
-    public void save() throws MemberRepositoryChangesNotSavecException {
+    private void save() throws MemberRepositoryChangesNotSavecException {
         try{
             this.jsonManager.toJson(members, new FileWriter(this.repositoryFile));
         } catch (IOException exception) {
