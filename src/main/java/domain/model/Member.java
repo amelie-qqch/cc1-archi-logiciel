@@ -18,7 +18,7 @@ public class Member {
         this.firstname    = firstname;
         this.lastname     = lastname;
         this.credentials  = credentials;
-        this.status       = new MemberStatus(MemberStatus.PENDING_PAYMENT);
+        this.status       = MemberStatus.PENDING;
     }
 
     public int getId(){
