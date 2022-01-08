@@ -1,47 +1,58 @@
 package domain.services.registration;
 
+import domain.exception.InvalidArgumentException;
 import domain.exception.MemberNotFoundException;
+import domain.model.SubscriptionFees;
 import domain.model.Member;
 import domain.model.MemberStatus;
 import infrastructure.exception.PaymentProcessingException;
 import infrastructure.exception.UnknownPricingPlanException;
 import infrastructure.repository.MemberRepository;
-import infrastructure.repository.PricingPlanRepository;
+import utils.LoggerInterface;
 
 public class ProcessPaymentHandler {
 
-    private final PricingPlanRepository pricingPlanRepository;
+    private final PricingPlanService pricingPlanService;
     private final MemberRepository memberRepository;
+    private final LoggerInterface logger;
 
     public ProcessPaymentHandler(
-            PricingPlanRepository pricingPlanRepository,
-            MemberRepository memberRepository
+            PricingPlanService pricingPlanService,
+            MemberRepository memberRepository,
+            LoggerInterface logger
     ) {
-        this.pricingPlanRepository  = pricingPlanRepository;
-        this.memberRepository       = memberRepository;
+        this.pricingPlanService = pricingPlanService;
+        this.memberRepository   = memberRepository;
+        this.logger             = logger;
     }
 
-    public void handle(ProcessPaymentAction action) throws UnknownPricingPlanException, MemberNotFoundException, PaymentProcessingException {
-        double registrationFee = this.pricingPlanRepository.getPricingFeeForPlan(action.pricingPlan);
+    public void handle(ProcessPaymentAction action) throws UnknownPricingPlanException, MemberNotFoundException, PaymentProcessingException, InvalidArgumentException {
+        SubscriptionFees registrationFee = this.pricingPlanService.getMonthlyFeeForPlan(action.pricingPlan);
 
         Member member = this.memberRepository.findById(action.memberId);
 
         if(!makePayment(registrationFee)){
+            this.logger.warning(
+                String.format(
+                    "%s - Erreur lors de l'opération de paiement du client : %d",
+                    this.getClass().getSimpleName(),
+                    member.getId()
+                )
+            );
+
             throw new PaymentProcessingException();
         }
 
-        member.changeStatus(new MemberStatus(MemberStatus.APPROVED));
-//        memberRepository.save();
+        member.changeStatus(MemberStatus.APPROVED);
+        memberRepository.update(member);
     }
 
     /**
      * Retourne true si le paiement a été effectué avec succès
      */
-    private boolean makePayment(double amountToPay){
+    private boolean makePayment(SubscriptionFees subscriptionFeesToPay){
 
         System.out.println("Processing payment ...");
-        //Connection au service de paiement et fournir les informations de paiement : montant ...
-        //récupérer le resultat de cette requête et retourner le booleen
 
         return true;
     }
