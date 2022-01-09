@@ -1,4 +1,4 @@
-package domain.services.registration;
+package domain.services.subscriptionPayment;
 
 import domain.exception.InvalidArgumentException;
 import domain.model.SubscriptionFees;

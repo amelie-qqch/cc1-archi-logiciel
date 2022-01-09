@@ -1,4 +1,4 @@
-package domain.services.registration;
+package domain.services.subscriptionRequest;
 
 import domain.model.PaymentMethod;
 import domain.model.SubscriptionFees;
@@ -10,12 +10,14 @@ public class SubscriptionRequestAction implements Action {
     public int memberId;
     public int subscriptionType;
     public int subscriptionPeriodicity;
+    public SubscriptionFees subscriptionFees;
+
 
     //Dans un autre handler pour la partie paiement
-    public int subscriptionRequestId;
-    public SubscriptionFees subscriptionFees;
-    public Date withdrawalDate;
-    public PaymentMethod paymentMethod;
+//    public int subscriptionRequestId;
+//    public SubscriptionFees subscriptionFees;
+//    public Date withdrawalDate;
+//    public PaymentMethod paymentMethod;
 
     //Autre action : ajout d'une méthode de paiement
 //    public boolean savePaymentMethod;

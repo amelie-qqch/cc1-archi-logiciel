@@ -2,13 +2,12 @@ package app.controller;
 
 import domain.exception.InvalidArgumentException;
 import domain.exception.MemberNotFoundException;
-import domain.services.registration.ProcessPaymentAction;
-import domain.services.registration.ProcessPaymentHandler;
+import domain.services.subscriptionPayment.ProcessPaymentAction;
+import domain.services.subscriptionPayment.ProcessPaymentHandler;
 import infrastructure.exception.PaymentProcessingException;
 import infrastructure.exception.UnknownPricingPlanException;
+import utils.HTTP;
 import utils.LoggerInterface;
-
-import java.util.ArrayList;
 
 public final class RegistrationFeePaymentController {
     private final ProcessPaymentHandler processPaymentHandler;
@@ -32,16 +31,15 @@ public final class RegistrationFeePaymentController {
             this.processPaymentHandler.handle(action);
         } catch (PaymentProcessingException exception) {
             this.logger.error(exception.getMessage());
-            //retourne 500 ou bien autre ?
 
-            return 500;
+            return HTTP.INTERNAL_SERVER_ERROR.value();
         } catch (MemberNotFoundException | UnknownPricingPlanException | InvalidArgumentException exception) {
             this.logger.error(exception.getMessage());
 
-            return 400;
+            return HTTP.BAD_REQUEST.value();
         }
 
-        return 204; // no content
+        return HTTP.NO_CONTENT.value();
     }
 
 

@@ -5,6 +5,7 @@ import domain.exception.MemberRegistrationException;
 import domain.model.Member;
 import domain.services.registration.MemberRegistrationAction;
 import domain.services.registration.MemberRegistrationHandler;
+import utils.HTTP;
 import utils.LoggerInterface;
 
 public final class MemberApplicationController {
@@ -39,10 +40,10 @@ public final class MemberApplicationController {
         } catch (MemberAlreadyExistsException | MemberRegistrationException exception) {
             this.logger.warning(exception.getMessage());
 
-            return 400;
+            return HTTP.NOT_FOUND.value();
         }
 
 
-        return 201; //et retourner le membre à la vue
+        return HTTP.CREATED.value(); //et retourner le membre à la vue
     }
 }

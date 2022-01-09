@@ -1,4 +1,4 @@
-package domain.services.registration;
+package domain.services.subscriptionPayment;
 
 import infrastructure.Action;
 
